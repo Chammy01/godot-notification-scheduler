@@ -56,6 +56,8 @@ If using both Android & iOS, ensure **same addon interface version**.
 
 ## <img src="../addon/icon.png" width="20"> Usage
 
+### Quick Start (Basic Pattern)
+
 1. Add a **NotificationScheduler** node to your scene.
 2. Connect [signals](#signals):
 	- `initialization_completed`
@@ -93,6 +95,26 @@ If using both Android & iOS, ensure **same addon interface version**.
 
 	var res = $NotificationScheduler.schedule(data)
 	```
+
+### 🎯 Recommended Pattern for Production Apps
+
+For real applications with multiple scenes, use the **Autoload (Singleton) pattern**:
+
+**See: [Integration Demo](../demo/INTEGRATION_DEMO.md)** for complete implementation guide.
+
+**Quick Reference:**
+- Create a `NotificationManager.gd` autoload singleton
+- Register it in `project.godot` under `[autoload]`
+- Use from anywhere: `NotificationManager.schedule_notification(...)`
+- **Don't** add NotificationScheduler nodes to individual scenes
+
+Benefits:
+- ✅ Single initialization
+- ✅ Centralized permission handling
+- ✅ No duplicate nodes
+- ✅ Clean architecture
+
+See the [enhanced demo](../demo/) for a complete working example.
 
 **Other Methods:**
 - `cancel(id)` – cancel before opened/dismissed

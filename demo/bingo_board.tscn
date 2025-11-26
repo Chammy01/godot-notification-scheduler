@@ -1,0 +1,156 @@
+[gd_scene load_steps=3 format=3 uid="uid://c35hqn5pxbuvw"]
+
+[ext_resource type="Script" path="res://bingo_board.gd" id="1_bingo"]
+[ext_resource type="Script" path="res://board_manager.gd" id="2_board"]
+
+[node name="BingoBoard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bingo")
+
+[node name="BoardManager" type="Node" parent="."]
+script = ExtResource("2_board")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="HeaderHBox" type="HBoxContainer" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/VBoxContainer/HeaderHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "🎯 BingoTask Board"
+
+[node name="BackButton" type="Button" parent="CanvasLayer/VBoxContainer/HeaderHBox"]
+layout_mode = 2
+text = "← Menu"
+
+[node name="StatsLabel" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Tasks: 0/9 | Completed: 0%"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 3
+
+[node name="Tile0" type="Button" parent="CanvasLayer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "+"
+
+[node name="Tile1" type="Button" parent="CanvasLayer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "+"
+
+[node name="Tile2" type="Button" parent="CanvasLayer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "+"
+
+[node name="Tile3" type="Button" parent="CanvasLayer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "+"
+
+[node name="Tile4" type="Button" parent="CanvasLayer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "+"
+
+[node name="Tile5" type="Button" parent="CanvasLayer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "+"
+
+[node name="Tile6" type="Button" parent="CanvasLayer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "+"
+
+[node name="Tile7" type="Button" parent="CanvasLayer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "+"
+
+[node name="Tile8" type="Button" parent="CanvasLayer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "+"
+
+[node name="ActionsVBox" type="VBoxContainer" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="InputHBox" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/ActionsVBox"]
+layout_mode = 2
+
+[node name="TaskInput" type="LineEdit" parent="CanvasLayer/VBoxContainer/ActionsVBox/InputHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Enter task name..."
+
+[node name="AddButton" type="Button" parent="CanvasLayer/VBoxContainer/ActionsVBox/InputHBox"]
+layout_mode = 2
+text = "Add Task"
+
+[node name="ButtonsHBox" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/ActionsVBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ResetButton" type="Button" parent="CanvasLayer/VBoxContainer/ActionsVBox/ButtonsHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Reset Board"
+
+[node name="ScheduleButton" type="Button" parent="CanvasLayer/VBoxContainer/ActionsVBox/ButtonsHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Schedule Tasks"
+
+[node name="InfoLabel" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "💡 Tip: Add tasks to see notifications in action!"
+horizontal_alignment = 1
+autowrap_mode = 2

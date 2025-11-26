@@ -91,14 +91,15 @@ func complete_task(task_id: int) -> bool:
 func reset_board() -> void:
 	print("🔄 BoardManager: Resetting board")
 	
-	tasks.clear()
-	completed_tasks.clear()
-	board_reset.emit()
-	
 	# Notification trigger: board reset
 	print("📱 BoardManager: Board reset - scheduling 'no tasks' reminders")
 	NotificationManager.cancel_no_progress_reminder()
 	NotificationManager.schedule_no_tasks_reminders()
+	
+	# Clear data and emit signal
+	tasks.clear()
+	completed_tasks.clear()
+	board_reset.emit()
 
 
 ## Save scheduled tasks for a specific date

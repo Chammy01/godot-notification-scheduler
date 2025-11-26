@@ -151,8 +151,8 @@ func _show_info(message: String) -> void:
 
 ## Debug function for testing notifications
 func _input(event: InputEvent) -> void:
-	if not OS.has_feature("editor"):
-		return  # Only in editor for testing
+	if not OS.is_debug_build():
+		return  # Only in debug builds
 	
 	if event is InputEventKey and event.pressed:
 		if event.keycode == KEY_N:

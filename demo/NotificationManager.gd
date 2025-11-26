@@ -60,8 +60,8 @@ func _on_plugin_ready() -> void:
 		_create_notification_channel()
 	else:
 		print("⚠️ NotificationManager: Notification permission not granted")
-		# Request permission automatically on first run
-		request_notification_permission()
+		# Note: Permission should be requested by user action, not automatically
+		# The app should show UI to explain why permissions are needed
 
 
 func _create_notification_channel() -> void:

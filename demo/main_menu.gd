@@ -20,9 +20,20 @@ func _ready() -> void:
 	$CanvasLayer/CenterContainer/VBoxContainer/ButtonsVBox/PermissionsButton.pressed.connect(_on_permissions_pressed)
 	$CanvasLayer/CenterContainer/VBoxContainer/ButtonsVBox/SettingsButton.pressed.connect(_on_settings_pressed)
 	
+	# Connect to NotificationManager signals for reactive updates
+	if NotificationManager and NotificationManager.notification_scheduler:
+		NotificationManager.notification_scheduler.permission_granted.connect(_on_permission_status_changed)
+		NotificationManager.notification_scheduler.permission_denied.connect(_on_permission_status_changed)
+	
 	# Wait a frame for NotificationManager to initialize
 	await get_tree().process_frame
 	_update_status()
+
+
+func _on_permission_status_changed(_permission_name: String = "") -> void:
+	# Update status when permission state changes
+	if is_inside_tree():
+		_update_status()
 
 
 func _update_status() -> void:
@@ -34,10 +45,8 @@ func _update_status() -> void:
 	if not NotificationManager.initialization_completed:
 		status_label.text = "🔄 NotificationManager initializing..."
 		status_label.add_theme_color_override("font_color", Color.YELLOW)
-		# Check again in a moment
-		await get_tree().create_timer(1.0).timeout
-		if is_inside_tree():
-			_update_status()
+		# Check again after a delay with a maximum of 5 retries
+		_retry_status_check()
 		return
 	
 	if NotificationManager.permission_granted:
@@ -50,6 +59,21 @@ func _update_status() -> void:
 		status_label.add_theme_color_override("font_color", Color.ORANGE)
 		permissions_button.disabled = false
 		permissions_button.text = "🔔 Request Permissions"
+
+
+var _status_check_retries: int = 0
+const MAX_STATUS_CHECK_RETRIES: int = 5
+
+func _retry_status_check() -> void:
+	_status_check_retries += 1
+	if _status_check_retries >= MAX_STATUS_CHECK_RETRIES:
+		status_label.text = "❌ Initialization timeout"
+		status_label.add_theme_color_override("font_color", Color.RED)
+		return
+	
+	await get_tree().create_timer(0.5).timeout
+	if is_inside_tree() and NotificationManager and not NotificationManager.initialization_completed:
+		_update_status()
 
 
 func _on_bingo_board_pressed() -> void:
@@ -66,11 +90,7 @@ func _on_permissions_pressed() -> void:
 	if NotificationManager:
 		print("🔔 MainMenu: Requesting notification permissions")
 		NotificationManager.request_notification_permission()
-		
-		# Wait a moment and update status
-		await get_tree().create_timer(1.0).timeout
-		if is_inside_tree():
-			_update_status()
+		# Status will be updated via signal connection
 
 
 func _on_settings_pressed() -> void:
